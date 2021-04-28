@@ -21,6 +21,8 @@ jobs:
           java-package: jdk
 
       - name: Build and Run Tests 🛠️
+        env:
+          GITHUB_TOKEN: ${{ secrets.READ_PACKAGES }}
         run: chmod +x gradlew && ./gradlew test
 
       - name: Upload Test Report 📠
