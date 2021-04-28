@@ -11,7 +11,7 @@ import de.wuespace.telestion.api.message.JsonMessage;
 import de.wuespace.telestion.services.message.Address;
 
 /**
- * Test-Example-Class
+ * Template-Example-Class
  */
 public final class TemplateVerticle extends AbstractVerticle {
 
