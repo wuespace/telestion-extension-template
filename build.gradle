@@ -64,12 +64,11 @@ task loadEnvironmentVariables {
             def key = it.substring(0, pos)
             def value = it.substring(pos + 1)
 
-            if (key == "GITHUB_ACTOR") {
-                println "FOUND ACTOR"
+            if (key.equals("GITHUB_ACTOR")) {
                 GITHUB_ACTOR = value
             }
 
-            if (key == "GITHUB_TOKEN") {
+            if (key.equals("GITHUB_TOKEN")) {
                 GITHUB_TOKEN = value
             }
         }
@@ -77,7 +76,6 @@ task loadEnvironmentVariables {
 }
 
 assemble.dependsOn(loadEnvironmentVariables)
-
 
 test {
     useJUnitPlatform()
