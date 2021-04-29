@@ -20,6 +20,7 @@ jobs:
       - name: Setup environment
         run: |
           echo "repo_name=$(echo "$GITHUB_REPOSITORY" | cut -d "/" -f 2 -)" >> $GITHUB_ENV
+          echo "repo_user=$(echo "$GITHUB_REPOSITORY" | cut -d "/" -f 1 -)" >> $GITHUB_ENV
           echo "lock_file=${GITHUB_WORKSPACE}/.github/initialized" >> $GITHUB_ENV
       
       - name: Check initialization state
@@ -44,12 +45,12 @@ jobs:
           REPLACE_WITH: ${{ github.event.inputs.group }}
           FILE: "build.gradle"
 
-      - name: Update repository in build.gradle
+      - name: Update repository user in build.gradle
         run: |
           sed -i "s/${PLACEHOLDER}/${REPLACE_WITH}/g" "${GITHUB_WORKSPACE}/${FILE}"
         env:
-          PLACEHOLDER: "##REPOSITORY##"
-          REPLACE_WITH: ${{ github.repository }}
+          PLACEHOLDER: "##REPO_USER##"
+          REPLACE_WITH: ${{ env.repo_user }}
           FILE: "build.gradle"
 
       - name: Update repository name in build.gradle
