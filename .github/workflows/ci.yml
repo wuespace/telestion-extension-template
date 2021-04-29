@@ -37,6 +37,8 @@ jobs:
 
       - name: Build packages 🛠️
         run: chmod +x gradlew && ./gradlew build
+        env:
+          GITHUB_TOKEN: ${{ secrets.READ_PACKAGES }}
 
   test:
     name: Test packages
@@ -71,6 +73,10 @@ jobs:
 
       - name: Build packages 🛠️
         run: chmod +x gradlew && ./gradlew build
+        env:
+          GITHUB_TOKEN: ${{ secrets.READ_PACKAGES }}
       
       - name: Test packages 🛃
         run: ./gradlew test
+        env:
+          GITHUB_TOKEN: ${{ secrets.READ_PACKAGES }}
