@@ -5,9 +5,13 @@ on:
   workflow_dispatch:
     inputs:
       group:
-        description: "Gradle Group Name"
+        description: "Package Group Id"
         required: true
-        default: "de.wuespace.telestion.extension.template"
+        default: "de.wuespace.telestion.extension"
+      artifact:
+        description: "Package Artifact Id"
+        required: true
+        default: "sample"
 
 jobs:
   initialize:
@@ -43,6 +47,14 @@ jobs:
         env:
           PLACEHOLDER: "##GROUP_ID##"
           REPLACE_WITH: ${{ github.event.inputs.group }}
+          FILE: "build.gradle"
+
+      - name: Update artifact in build.gradle
+        run: |
+          sed -i "s/${PLACEHOLDER}/${REPLACE_WITH}/g" "${GITHUB_WORKSPACE}/${FILE}"
+        env:
+          PLACEHOLDER: "##ARTIFACT_ID##"
+          REPLACE_WITH: ${{ github.event.inputs.artifact }}
           FILE: "build.gradle"
 
       - name: Update repository user in build.gradle

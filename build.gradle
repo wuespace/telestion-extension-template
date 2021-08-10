@@ -40,7 +40,7 @@ publishing {
     publications {
         gpr(MavenPublication) {
             groupId = '##GROUP_ID##'
-            artifactId = '##REPO_NAME##'
+            artifactId = '##ARTIFACT_ID##'
             version = System.getenv("VERSION")
 
             from components.java
