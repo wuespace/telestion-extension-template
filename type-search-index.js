@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes","u":"allclasses-index.html"},{"p":"de.wuespace.telestion.extension.template","l":"TemplateVerticle.Position"},{"p":"de.wuespace.telestion.extension.template","l":"TemplateVerticle"}];updateSearchResults();
