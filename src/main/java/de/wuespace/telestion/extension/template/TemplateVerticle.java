@@ -1,36 +1,40 @@
 package de.wuespace.telestion.extension.template;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.vertx.core.AbstractVerticle;
-import io.vertx.core.Promise;
-import java.time.Duration;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import de.wuespace.telestion.api.verticle.TelestionConfiguration;
+import de.wuespace.telestion.api.verticle.TelestionVerticle;
+import de.wuespace.telestion.api.verticle.trait.WithEventBus;
+import de.wuespace.telestion.api.verticle.trait.WithTiming;
+import de.wuespace.telestion.extension.template.message.Position;
+import io.vertx.core.Vertx;
 
-import de.wuespace.telestion.api.message.JsonMessage;
-import de.wuespace.telestion.services.message.Address;
+import java.time.Duration;
 
 /**
- * Template-Example-Class
+ * Template verticle which publishes a position in regular intervals.
  */
-public final class TemplateVerticle extends AbstractVerticle {
+@SuppressWarnings("unused")
+public class TemplateVerticle extends TelestionVerticle<TemplateVerticle.Configuration>
+        implements WithTiming, WithEventBus {
 
-	private static final Logger logger = LoggerFactory.getLogger(TemplateVerticle.class);
+    public static void main(String[] args) {
+        var vertx = Vertx.vertx();
+        vertx.deployVerticle(new TemplateVerticle());
+    }
 
-	@Override
-	public void start(Promise<Void> startPromise) throws Exception {
-		vertx.setPeriodic(Duration.ofSeconds(2).toMillis(), timerId -> {
-			vertx.eventBus().publish(Address.outgoing(this), new Position(0.3, 7.2, 8.0));
-		});
-		startPromise.complete();
-	}
+    public record Configuration(
+            @JsonProperty int delay,
+            @JsonProperty String outAddress
+    ) implements TelestionConfiguration {
+        public Configuration() {
+            this(2, "position");
+        }
+    }
 
-	public record Position(@JsonProperty double x, @JsonProperty double y,
-						   @JsonProperty double z) implements JsonMessage {
-
-		@SuppressWarnings("unused")
-		private Position() {
-			this(0.0, 0.0, 0.0);
-		}
-	}
+    @Override
+    public void onStart() {
+        interval(Duration.ofSeconds(getConfig().delay()), id -> {
+            publish(getConfig().outAddress(), new Position(0.3, 7.2, 8.0));
+        });
+    }
 }
