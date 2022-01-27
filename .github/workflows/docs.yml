@@ -23,8 +23,6 @@ jobs:
 
       - name: Build documentation 🛠️
         run: chmod +x gradlew && ./gradlew javadoc
-        env:
-          GITHUB_TOKEN: ${{ secrets.READ_PACKAGES }}
       - name: Finalize build 🪄
         run: touch build/docs/javadoc/.nojekyll
 

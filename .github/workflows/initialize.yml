@@ -5,13 +5,9 @@ on:
   workflow_dispatch:
     inputs:
       group:
-        description: "Package Group Id"
+        description: "Gradle Group Name"
         required: true
-        default: "de.wuespace.telestion.extension"
-      artifact:
-        description: "Package Artifact Id"
-        required: true
-        default: "sample"
+        default: "de.wuespace.telestion.extension.template"
 
 jobs:
   initialize:
@@ -26,11 +22,6 @@ jobs:
           echo "repo_name=$(echo "$GITHUB_REPOSITORY" | cut -d "/" -f 2 -)" >> $GITHUB_ENV
           echo "repo_user=$(echo "$GITHUB_REPOSITORY" | cut -d "/" -f 1 -)" >> $GITHUB_ENV
           echo "lock_file=${GITHUB_WORKSPACE}/.github/initialized" >> $GITHUB_ENV
-
-      - name: Fetch GitHub repository metadata
-        uses: varunsridharan/action-repository-meta@2.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Check initialization state
         run: |
@@ -52,14 +43,6 @@ jobs:
         env:
           PLACEHOLDER: "##GROUP_ID##"
           REPLACE_WITH: ${{ github.event.inputs.group }}
-          FILE: "build.gradle"
-
-      - name: Update artifact in build.gradle
-        run: |
-          sed -i "s/${PLACEHOLDER}/${REPLACE_WITH}/g" "${GITHUB_WORKSPACE}/${FILE}"
-        env:
-          PLACEHOLDER: "##ARTIFACT_ID##"
-          REPLACE_WITH: ${{ github.event.inputs.artifact }}
           FILE: "build.gradle"
 
       - name: Update repository user in build.gradle
@@ -86,21 +69,6 @@ jobs:
         env:
           GROUP: ${{ github.event.inputs.group }}
           JAVA_MAIN_SRC: "src/main/java"
-
-      - name: Generate main README.md
-        run: |
-          mv -f EXTENSION_README.md README.md
-          sed -i "s/##REPO_NAME##/${REPO_NAME}/g" README.md
-          sed -i "s/##REPO_USER##/${REPO_USER}/g" README.md
-          sed -i "s/##REPO_DESCRIPTION##/${REPO_DESCRIPTION}/g" README.md
-          sed -i "s/##GROUP_ID##/${GROUP_ID}/g" README.md
-          sed -i "s/##ARTIFACT_ID##/${ARTIFACT_ID}/g" README.md
-        env:
-          REPO_NAME: ${{ env.repo_name }}
-          REPO_USER: ${{ env.repo_user }}
-          REPO_DESCRIPTION: ${{ env.REPOSITORY_DESCRIPTION }}
-          GROUP_ID: ${{ github.event.inputs.group }}
-          ARTIFACT_ID: ${{ github.event.inputs.artifact }}
 
       - name: Initialization finished. Locking action...
         run: |
