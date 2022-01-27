@@ -1,3 +1,0 @@
-# RENAME THIS FILE TO gradle.properties
-GITHUB_ACTOR=<your_github_username>
-GITHUB_TOKEN=<your_personal_access_token>

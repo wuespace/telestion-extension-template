@@ -7,14 +7,6 @@ group '##GROUP_ID##'
 
 repositories {
     mavenCentral()
-    maven {
-        name = "GitHubPackages"
-        url = uri("https://maven.pkg.github.com/wuespace/telestion-core/")
-        credentials {
-            username = System.getenv("GITHUB_ACTOR") == null ? GITHUB_ACTOR : System.getenv("GITHUB_ACTOR")
-            password = System.getenv("GITHUB_TOKEN") == null ? GITHUB_TOKEN : System.getenv("GITHUB_TOKEN")
-        }
-    }
 }
 
 java {
@@ -49,8 +41,8 @@ publishing {
 }
 
 dependencies {
-    implementation 'de.wuespace.telestion:telestion-api:0.1.2'
-    implementation 'de.wuespace.telestion:telestion-services:0.1.2'
+    implementation 'de.wuespace.telestion:telestion-api:0.7.0'
+    implementation 'de.wuespace.telestion:telestion-services:0.7.0'
 
     implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.33'
     implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.10'
