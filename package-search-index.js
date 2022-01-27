@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"de.wuespace.telestion.extension.template"}];updateSearchResults();
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"de.wuespace.telestion.extension.template"},{"l":"de.wuespace.telestion.extension.template.message"}];updateSearchResults();
