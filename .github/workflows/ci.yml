@@ -20,7 +20,7 @@ jobs:
         uses: actions/checkout@v2.4.0
 
       - name: Set up JDK 16 💿
-        uses: actions/setup-java@v2.5.0
+        uses: actions/setup-java@v3.0.0
         with:
           distribution: 'zulu'
           java-version: '16'
@@ -40,7 +40,7 @@ jobs:
         uses: actions/checkout@v2.4.0
 
       - name: Set up JDK 16 💿
-        uses: actions/setup-java@v2.5.0
+        uses: actions/setup-java@v3.0.0
         with:
           distribution: 'zulu'
           java-version: '16'
@@ -49,7 +49,7 @@ jobs:
 
       - name: Build packages 🛠️
         run: chmod +x gradlew && ./gradlew build
-      
+
       - name: Test packages 🛃
         run: ./gradlew test
         env:
@@ -61,3 +61,4 @@ jobs:
         with:
           report_paths: '**/build/test-results/test/TEST-*.xml'
           github_token: ${{ secrets.GITHUB_TOKEN }}
+
